@@ -1,6 +1,6 @@
 # npc_io
 
-
+File IO tools for MindScope Neuropixels projects in the cloud.
 
 [![PyPI](https://img.shields.io/pypi/v/npc_io.svg?label=PyPI&color=blue)](https://pypi.org/project/npc_io/)
 [![Python version](https://img.shields.io/pypi/pyversions/npc_io)](https://pypi.org/project/npc_io/)

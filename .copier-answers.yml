@@ -1,5 +1,5 @@
 # Changes here will be overwritten by Copier
-_commit: 0df6fc9
+_commit: 185b815
 _src_path: gh:alleninstitute/copier-pdm-npc
 add_requirements_txt: false
 author_email: ben.hardcastle@alleninstitue.org
@@ -11,7 +11,7 @@ copyright_holder: Allen Institute for Neural Dynamics
 copyright_holder_email: ''
 copyright_license: MIT
 package_version: 0.1.0
-project_description: ''
+project_description: File IO tools for MindScope Neuropixels projects in the cloud.
 project_name: npc_io
 python_package_distribution_name: npc-io
 python_package_import_name: npc_io

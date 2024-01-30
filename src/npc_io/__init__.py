@@ -1,7 +1,7 @@
 """
     npc_io
 
-    
+    File IO tools for MindScope Neuropixels projects in the cloud.
     :author: Ben Hardcastle <ben.hardcastle@alleninstitue.org>
     :license: MIT
 """

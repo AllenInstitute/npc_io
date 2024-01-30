@@ -1,6 +1,6 @@
 [project]
 name = "npc-io"
-description = ""
+description = "File IO tools for MindScope Neuropixels projects in the cloud."
 authors = [
     {name = "Ben Hardcastle", email = "ben.hardcastle@alleninstitue.org"}
 ]
@@ -8,7 +8,7 @@ license = {text = "MIT"}
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = []
-version = 
+version = "0.1.0"
 
 classifiers = [
     "Development Status :: 3 - Alpha", # https://pypi.org/classifiers/

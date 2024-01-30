@@ -1,5 +1,5 @@
 site_name: "npc_io"
-site_description: ""
+site_description: "File IO tools for MindScope Neuropixels projects in the cloud."
 site_url: "https://AllenInstitute.github.io/npc_io"
 repo_url: "https://github.com/AllenInstitute/npc_io"
 repo_name: "AllenInstitute/npc_io"
