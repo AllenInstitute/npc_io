@@ -1,0 +1,37 @@
+name: Documentation
+
+on:
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - "**.md"
+      - docs/**
+  release:
+    types: [published]
+  workflow_dispatch:
+
+concurrency:
+  group: {% raw %}${{ github.ref }}{% endraw %}
+  cancel-in-progress: false
+      
+jobs:
+  build-doc:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pdm-project/setup-pdm@main
+        with:
+          python-version: 3.x
+          cache: true
+      - name: Build pages
+        run: |
+          pdm install -G docs
+          cd docs && pdm run mkdocs build
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
+          publish_dir: ./docs/site
