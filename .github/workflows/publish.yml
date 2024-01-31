@@ -23,7 +23,7 @@ concurrency: # jobs currently running will be cancelled when this workflow start
   cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
       
 jobs:
-  package:
+  test:
 
     runs-on: ubuntu-latest
     strategy:
@@ -59,7 +59,11 @@ jobs:
       run: |
         mkdir .mypy_cache   
         pdm run prebuild
-        
+    
+    pulish:
+      needs: test
+      runs-on: ubuntu-latest
+      steps:
     - name: Bump project version
       run: |
         pdm run bumpver

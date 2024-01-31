@@ -5,6 +5,7 @@
     :author: Ben Hardcastle <ben.hardcastle@alleninstitue.org>
     :license: MIT
 """
+
 import doctest
 import importlib.metadata
 import logging
@@ -26,6 +27,7 @@ def load_dotenv() -> None:
     is_dotenv_used = dotenv.load_dotenv(dotenv.find_dotenv(usecwd=True))
     logger.debug(f"environment variables loaded from dotenv file: {is_dotenv_used}")
 
+
 load_dotenv()
 
 
@@ -42,7 +44,9 @@ def testmod(**testmod_kwargs) -> doctest.TestResults:
             from npc_io import testmod
             testmod()
     """
-    _ = testmod_kwargs.setdefault("optionflags", doctest.NORMALIZE_WHITESPACE | doctest.ELLIPSIS)
+    _ = testmod_kwargs.setdefault(
+        "optionflags", doctest.NORMALIZE_WHITESPACE | doctest.ELLIPSIS
+    )
     return doctest.testmod(**testmod_kwargs)
 
 
