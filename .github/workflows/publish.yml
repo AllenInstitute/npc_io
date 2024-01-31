@@ -58,23 +58,14 @@ jobs:
         CODE_OCEAN_DOMAIN: ${{ secrets.CODE_OCEAN_DOMAIN }}
       run: |
         mkdir .mypy_cache   
-        pdm run prebuild
+        pdm run test
     
-    pulish:
-      needs: test
-      runs-on: ubuntu-latest
-      steps:
-    - name: Bump project version
-      run: |
-        pdm run bumpver
-                
-    - name: Publish
-      run: |
-        pdm publish
-    
-    
-
-    - name: Bump, pull, tag commit
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+              
+    - name: Publish with tag
       # pull in case non-packaged files were changed since job started (packaged
       # files would trigger a new job and cancel this one)
       run: |
@@ -83,18 +74,12 @@ jobs:
         git stash
         git pull --rebase 
         git stash pop
-        pdm run bumpver
-        git commit -am "Bump [skip actions]"
-        pdm run tag
+        pdm publish
         git push --tags
       env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
           # use PAT, or push comes from `github-actions` bot, which can't trigger
           # other workflows   
-
-    - name: Publish
-      run: |
-        pdm publish
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
