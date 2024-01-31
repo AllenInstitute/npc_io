@@ -75,8 +75,9 @@ jobs:
         python-version: 3.11
         cache: true # speeds-up setup by caching downloaded packages 
           
-    - name: Publish with tag
+    - name: Publish with bump & tag
       run: |
+        cd ${{ github.workspace }}
         git config --global user.email "ben.hardcastle@alleninstitue.org"
         git config --global user.name "Ben Hardcastle"
         pdm publish
