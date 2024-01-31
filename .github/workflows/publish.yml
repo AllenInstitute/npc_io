@@ -69,6 +69,11 @@ jobs:
         fetch-depth: 0    # get all commits (on default branch)
         fetch-tags: true  
 
+    - uses: pdm-project/setup-pdm@v4
+      with:
+        python-version: 3.11
+        cache: true # speeds-up setup by caching downloaded packages 
+          
     - name: Publish with tag
       # pull in case non-packaged files were changed since job started (packaged
       # files would trigger a new job and cancel this one)
