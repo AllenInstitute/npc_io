@@ -201,18 +201,29 @@ pytest = "pytest --cov --cov-report=xml"
 mypy = "mypy src --install-types --non-interactive"
 log = "git-changelog -o CHANGELOG.md"
 dryrun = "pdm publish --repository testpypi --dry-run"
-tag = "pdm bump tag"
 post_init = "pdm install --plugins"
 
 [tool.pdm.scripts.bumpver]
 composite = [
     "pdm self add pdm-bump",
-    "pdm run bump micro",
+    "pdm bump micro",
+]
+
+[tool.pdm.scripts.tag]
+composite = [
+    "pdm self add pdm-bump",
+    "pdm bump tag",
 ]
 
 [tool.pdm.scripts.docs]
 shell = "cd docs && mkdocs serve"
 help = "Start the dev server for doc preview"
+
+[tool.pdm.scripts.test]
+composite = [
+    "pdm run mypy",
+    "pdm run pytest",
+]
 
 [tool.pdm.scripts.pre_build]
 composite = [
@@ -220,12 +231,6 @@ composite = [
     "pdm run ruff",
     "pdm run log",
     "pdm run bumpver",
-]
-
-[tool.pdm.scripts.test]
-composite = [
-    "pdm run mypy",
-    "pdm run pytest",
 ]
 
 [tool.pdm.scripts.post_build]
