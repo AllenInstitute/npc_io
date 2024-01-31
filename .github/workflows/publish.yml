@@ -25,7 +25,7 @@ concurrency: # jobs currently running will be cancelled when this workflow start
 jobs:
   test:
 
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest, macos-latest, windows-latest]
     strategy:
       fail-fast: true
       matrix:
@@ -60,6 +60,8 @@ jobs:
   publish:
     needs: test
     runs-on: ubuntu-latest
+    permissions: write-all
+
     steps:
     - uses: actions/checkout@v4
       with:
