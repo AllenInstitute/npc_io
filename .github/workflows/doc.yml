@@ -5,8 +5,8 @@ on:
     paths:
       - "**.md"
       - docs/**
-  tags:
-    - '**'
+    tags:
+      - '**'
   release:
     types: [published]
   workflow_dispatch:
