@@ -7,7 +7,11 @@ authors = [
 license = {text = "MIT"}
 readme = "README.md"
 requires-python = ">=3.9"
-dependencies = []
+dependencies = [
+    "crc32c>=2.3.post0",
+    "universal-pathlib>=0.1.4",
+    "typing-extensions>=4.9.0",
+]
 version = "0.1.0"
 
 classifiers = [
@@ -24,12 +28,6 @@ classifiers = [
 [project.urls]
 Repository = "https://github.com/AllenInstitute/npc_io"
 Issues = "https://github.com/AllenInstitute/npc_io/issues"
-
-[project.scripts]
-# create executables pointing to specific functions, e.g. for CLI tools
-# see src/scripts/README.md
-# executable_name = "npc_io.scripts.module_name:main"
-
 
 [tool.pdm.build]
 package-dir = "src"
