@@ -207,30 +207,6 @@ def free_gb(path: PathLike) -> float:
     return round(shutil.disk_usage(path).free / 1024**3, 1)
 
 
-def write_nwb(
-    path: PathLike,
-    nwb: pynwb.NWBFile,
-) -> None:
-    """Switches IO based on path suffix
-    - use `.nwb` to save with `NWBHDF5IO`
-    - use `.nwb.zarr` to save with `NWBZarrIO` (required for reading nwb.zarr files anyway)
-    - can't currently write original hdf5 NWB to cloud directly
-    """
-    path = from_pathlike(path)
-    if path.suffix == ".zarr":
-        nwb_io_class = hdmf_zarr.NWBZarrIO
-        if ".nwb" not in path.name:
-            path = path.with_suffix(".nwb.zarr")
-    else:
-        assert path.suffix == ".nwb"
-        nwb_io_class = pynwb.NWBHDF5IO
-        if not path.as_uri().startswith("file"):
-            raise ValueError(f"Must use a local path for {nwb_io_class!r}")
-
-    with nwb_io_class(path=path.as_posix(), mode="w") as nwb_io:
-        nwb_io.write(nwb)
-
-
 _NOT_FOUND = object()
 _T = TypeVar("_T")
 
