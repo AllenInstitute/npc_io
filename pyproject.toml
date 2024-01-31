@@ -2,11 +2,10 @@
 name = "npc-io"
 description = "File IO tools for MindScope Neuropixels projects in the cloud."
 authors = [
-    {name = "Ben Hardcastle", email = "ben.hardcastle@alleninstitue.org"}
+    { name = "Ben Hardcastle", email = "ben.hardcastle@alleninstitue.org" },
 ]
-license = {text = "MIT"}
 readme = "README.md"
-requires-python = ">=3.9, <3.12" # waiting for https://github.com/fsspec/universal_pathlib/milestone/1
+requires-python = ">=3.9, <3.12"
 dependencies = [
     "crc32c>=2.3.post0",
     "universal-pathlib>=0.1.4",
@@ -14,10 +13,9 @@ dependencies = [
     "python-dotenv>=1.0.1",
     "s3fs>=2023.12.2",
 ]
-version = "0.1.0"
-
+version = "0.1.2"
 classifiers = [
-    "Development Status :: 3 - Alpha", # https://pypi.org/classifiers/
+    "Development Status :: 3 - Alpha",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -27,19 +25,21 @@ classifiers = [
     "Operating System :: POSIX :: Linux",
 ]
 
+[project.license]
+text = "MIT"
+
 [project.urls]
 Repository = "https://github.com/AllenInstitute/npc_io"
 Issues = "https://github.com/AllenInstitute/npc_io/issues"
 
+[tool.pdm]
+plugins = [
+    "pdm-bump",
+    "copier",
+]
+
 [tool.pdm.build]
 package-dir = "src"
-
-[build-system]
-requires = [
-    "setuptools>=61",
-    "wheel",
-]
-build-backend = "setuptools.build_meta"
 
 [tool.pdm.dev-dependencies]
 dev = [
@@ -49,7 +49,6 @@ dev = [
     "pytest-cov>=4.1.0",
     "black>=23.7.0",
     "pytest-xdist>=3.3.1",
-    ##
     "git-changelog>=2.3",
     "parver>=0.3",
 ]
@@ -68,19 +67,16 @@ docs = [
     "tomli>=2.0; python_version < '3.11'",
 ]
 
-[tool.pdm]
-plugins = [
-    "pdm-bump",
-    "copier",
-]
-
 [tool.pdm.scripts]
 ruff = "ruff check src --fix-only"
 black = "black src"
 test = "pytest --cov --cov-report=xml"
 mypy = "mypy src --install-types --non-interactive"
-doc = {shell = "cd docs && mkdocs serve", help = "Start the dev server for doc preview"}
 log = "git-changelog -o CHANGELOG.md"
+
+[tool.pdm.scripts.doc]
+shell = "cd docs && mkdocs serve"
+help = "Start the dev server for doc preview"
 
 [tool.pdm.scripts.prebuild]
 composite = [
@@ -127,20 +123,23 @@ npc_io = [
 ]
 
 [tool.black]
-# line-length = 100
-target-version = ["py39", "py310", "py311"]
+target-version = [
+    "py39",
+    "py310",
+    "py311",
+]
 
 [tool.ruff]
 line-length = 100
 select = [
-  "B",    # flake8-bugbear
-  "C4",   # flake8-comprehensions
-  "E",    # pycodestyle
-  "F",    # pyflakes
-  "PGH",  # pygrep-hooks
-  "RUF",  # ruff
-  "W",    # pycodestyle
-  "YTT",  # flake8-2020
+    "B",
+    "C4",
+    "E",
+    "F",
+    "PGH",
+    "RUF",
+    "W",
+    "YTT",
     "ANN",
     "C",
     "I",
@@ -148,9 +147,12 @@ select = [
     "N",
     "UP",
 ]
-# extend-ignore = ["B018", "B019"]
-src = ["src"]
-extend-exclude = ["tests/fixtures"]
+src = [
+    "src",
+]
+extend-exclude = [
+    "tests/fixtures",
+]
 target-version = "py39"
 
 [tool.ruff.flake8-tidy-imports]
@@ -158,10 +160,6 @@ ban-relative-imports = "all"
 
 [tool.ruff.mccabe]
 max-complexity = 10
-
-# [tool.ruff.isort]
-# known-first-party = ["npc_io"]
-
 
 [tool.coverage.paths]
 source = [
@@ -228,6 +226,17 @@ exclude = [
 [tool.isort]
 profile = "black"
 atomic = true
-skip_glob = ["*/setup.py"]
+skip_glob = [
+    "*/setup.py",
+]
 filter_files = true
-known_first_party = ["npc_io"]
+known_first_party = [
+    "npc_io",
+]
+
+[build-system]
+requires = [
+    "setuptools>=61",
+    "wheel",
+]
+build-backend = "setuptools.build_meta"

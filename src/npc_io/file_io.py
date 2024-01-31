@@ -1,6 +1,7 @@
 """
 Tools for working with Open Ephys raw data files.
 """
+
 from __future__ import annotations
 
 import contextlib
@@ -77,6 +78,7 @@ def checksum(path: PathLike) -> str:
     checksum = formatted(hash)
     logger.debug(f"{hasher} checksum of {path}: {checksum}")
     return checksum
+
 
 def checksums_match(*paths: PathLike) -> bool:
     checksums = tuple(checksum(p) for p in paths)
@@ -227,12 +229,10 @@ class cached_property(functools.cached_property, Generic[_T]):
         super().__init__(func)
 
     @overload
-    def __get__(self, instance: None, owner: type[Any] | None = None) -> Self:
-        ...
+    def __get__(self, instance: None, owner: type[Any] | None = None) -> Self: ...
 
     @overload
-    def __get__(self, instance: object, owner: type[Any] | None = None) -> _T:
-        ...
+    def __get__(self, instance: object, owner: type[Any] | None = None) -> _T: ...
 
     def __get__(self, instance, owner=None) -> Self | _T | Any:
         if instance is None:
@@ -303,6 +303,7 @@ def run_and_save_notebook(
 
 if __name__ == "__main__":
     from npc_io import testmod
+
     testmod()
     # import doctest
 

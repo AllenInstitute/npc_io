@@ -5,7 +5,7 @@
 groups = ["default", "dev", "docs"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:fcac2418080a95d2da210de1584bde572585f5d3b0ecc62fdfa9b9e0070a726b"
+content_hash = "sha256:878efeac50317385b482184258b6fce45d70d23bf30607dbcbfd4072bfa39c44"
 
 [[package]]
 name = "aiobotocore"
