@@ -34,9 +34,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0    # get all commits (on default branch)
-        fetch-tags: true  
     
     - uses: pdm-project/setup-pdm@v4
       with:
@@ -64,7 +61,11 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-              
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0    # get all commits (on default branch)
+        fetch-tags: true  
+
     - name: Publish with tag
       # pull in case non-packaged files were changed since job started (packaged
       # files would trigger a new job and cancel this one)
