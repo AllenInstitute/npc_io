@@ -2,19 +2,17 @@ name: Build docs
 
 on:
   push:
-    branches:
-      - master
-      - main
     paths:
       - "**.md"
       - docs/**
+  tags:
+    - '**'
   release:
     types: [published]
   workflow_dispatch:
 
 concurrency:
   group: ${{ github.ref }}
-  cancel-in-progress: false
       
 jobs:
   build-doc:
