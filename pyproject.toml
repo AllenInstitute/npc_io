@@ -12,6 +12,7 @@ dependencies = [
     "universal-pathlib>=0.1.4",
     "typing-extensions>=4.9.0",
     "python-dotenv>=1.0.1",
+    "s3fs>=2023.12.2",
 ]
 version = "0.1.0"
 
