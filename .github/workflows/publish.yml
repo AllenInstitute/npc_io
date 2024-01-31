@@ -33,8 +33,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-      fetch-depth: 0    # get all commits (on default branch)
-      fetch-tags: true  
+      with:
+        fetch-depth: 0    # get all commits (on default branch)
+        fetch-tags: true  
     
     - uses: pdm-project/setup-pdm@v3
       with:
