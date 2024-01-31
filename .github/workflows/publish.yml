@@ -10,9 +10,9 @@ on:
       - '!**.ipynb'
       - '!**.json'
       - '!.vscode'
-      - '!scripts'
-      - '!tests'
-      - '!notebooks'
+      - '!scripts/**'
+      - '!tests/**'
+      - '!notebooks/**'
       - '!**.md'
       - '!**.yml'
   workflow_dispatch:  # adds a 'Run Workflow' button for manual launching
