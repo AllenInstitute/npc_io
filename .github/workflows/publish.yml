@@ -76,14 +76,9 @@ jobs:
         cache: true # speeds-up setup by caching downloaded packages 
           
     - name: Publish with tag
-      # pull in case non-packaged files were changed since job started (packaged
-      # files would trigger a new job and cancel this one)
       run: |
         git config --global user.email "ben.hardcastle@alleninstitue.org"
         git config --global user.name "Ben Hardcastle"
-        git stash
-        git pull --rebase 
-        git stash pop
         pdm publish
         git push --tags
       env:
