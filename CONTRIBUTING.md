@@ -80,3 +80,8 @@ Always commit & push `pdm.lock` to share the up-to-date dev environment
 
 - pull changes with `git pull --rebase` to keep the commit history easy to read
 
+## Updating from the original template
+With a clean working directory, run `pipx run copier update`.
+
+See [here](https://github.com/AllenInstitute/copier-pdm-npc/blob/main/README.md)
+for more info.
