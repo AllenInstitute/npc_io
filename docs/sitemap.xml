@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://AllenInstitute.github.io/npc_io/docs/</loc>
+         <loc>https://AllenInstitute.github.io/npc_io/</loc>
          <lastmod>2024-02-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://AllenInstitute.github.io/npc_io/docs/changelog/</loc>
+         <loc>https://AllenInstitute.github.io/npc_io/changelog/</loc>
          <lastmod>2024-02-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://AllenInstitute.github.io/npc_io/docs/contributing/</loc>
+         <loc>https://AllenInstitute.github.io/npc_io/contributing/</loc>
          <lastmod>2024-02-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
