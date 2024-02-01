@@ -76,7 +76,7 @@ jobs:
 
     - uses: pdm-project/setup-pdm@v4
       with:
-        python-version: 3.11
+        python-version: '3.11'
         cache: true # speeds-up setup by caching downloaded packages 
 
     - name: Publish with bump & tag
