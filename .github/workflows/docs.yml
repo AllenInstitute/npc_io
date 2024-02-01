@@ -22,11 +22,11 @@ jobs:
       - uses: actions/checkout@v3
       - uses: pdm-project/setup-pdm@main
         with:
-          python-version: 3.x
+          python-version: '3.11'
           cache: true
       - name: Build pages
         run: |
-          pdm install -G docs
+          pdm install -G docs -d
           pdm run pytest
           cd docs && pdm run mkdocs build
       - name: Deploy
