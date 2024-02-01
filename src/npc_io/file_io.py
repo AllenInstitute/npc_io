@@ -10,15 +10,14 @@ import os
 import pathlib
 import shutil
 import subprocess
-from typing import Any, Literal, Union
+from typing import Any, Literal
 
 import crc32c
 import upath
-from typing_extensions import TypeAlias
+
+from npc_io.typing import PathLike
 
 logger = logging.getLogger(__name__)
-
-PathLike: TypeAlias = Union[str, bytes, os.PathLike, pathlib.Path, upath.UPath]
 
 
 def from_pathlike(pathlike: PathLike) -> upath.UPath:
