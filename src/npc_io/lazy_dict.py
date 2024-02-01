@@ -1,4 +1,6 @@
-
+"""
+Mapping class for postponed evaluation of functions and caching of results.
+"""
 from __future__ import annotations
 
 import collections.abc
@@ -19,25 +21,37 @@ class LazyDict(collections.abc.Mapping[K, V]):
 
     Effectively immutable after initialization.
 
-    Initialize with a dict:
-    >>> d = LazyDict({'a': (lambda x: x + 1, (1,), {})})
-    >>> d['a']
-    2
+    Examples: 
+    .. code-block:: text
+        # input values in the form `tuple(callable, args: Sequence, kwargs: Mapping)`
+        >>> import random
+        >>> callable, args, kwargs = random.choice, (range(100),), {}
+        
+        # initialize with keyword arguments, like the built-in dict:
+        >>> d = LazyDict(choice=(callable, args, kwargs))
+        
+        # or with a dict:
+        >>> d = LazyDict({'choice': (callable, args, kwargs)})
+        
+        >>> d
+        LazyDict(keys=['choice'])
+        
+        # values are only computed the first time they're accessed, then cached:
+        >>> c = d['choice']         
+        >>> c                               # doctest: +SKIP
+        5
+        >>> c == d['choice']
+        True
 
-    or with keyword arguments:
-    >>> d = LazyDict(b=(min, (1, 2), {}))
-    >>> d['b']
-    1
-    
-    Dict-like behavior:
-    >>> len(d)
-    1
-    >>> d
-    LazyDict(keys=['b'])
-    >>> [k for k in d]
-    ['b']
+        
+        # other immutable dict-like behavior:
+        >>> len(d)
+        1
+        >>> [k for k in d]
+        ['choice']
+        >>> d.get('random') is None
+        True
     """
-
     def __init__(self, *args, **kwargs) -> None:
         self._raw_dict = dict(*args, **kwargs)
 
