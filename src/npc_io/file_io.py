@@ -1,5 +1,5 @@
 """
-Tools for working with Open Ephys raw data files.
+Tools for working with files on local machine, network or cloud.
 """
 
 from __future__ import annotations
