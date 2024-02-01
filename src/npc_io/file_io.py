@@ -15,7 +15,7 @@ from typing import Any, Literal
 import crc32c
 import upath
 
-from npc_io.typing import PathLike
+from npc_io.types import PathLike
 
 logger = logging.getLogger(__name__)
 
