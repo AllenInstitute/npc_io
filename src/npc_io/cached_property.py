@@ -1,14 +1,5 @@
 """
 Copy of stdlib functools.cached_property minus faulty thread lock.
-
->>> import random
->>> class Test:
-...     @cached_property
-...     def cached_prop(self):
-...         return random.random()
->>> t = Test()
->>> x = t.cached_prop
->>> assert x == t.cached_prop
 """
 from __future__ import annotations
 
@@ -28,7 +19,20 @@ class cached_property(functools.cached_property, Generic[_T]):
 
     This version will make concurrent tasks across multiple instances faster, but
     each instance's cached properties will no longer be thread-safe - ie. don't
-    dispatch the same instance to multiple threads without implementing your own lock.
+    dispatch the same instance to multiple threads without implementing your own
+    lock.
+    
+    
+    Examples:
+    .. code-block:: text
+        >>> import random
+        >>> class Test:
+        ...     @cached_property
+        ...     def cached_prop(self):
+        ...         return random.random()
+        >>> t = Test()
+        >>> x = t.cached_prop
+        >>> assert x == t.cached_prop
     """
 
     func: Callable[[Any], _T]
