@@ -10,10 +10,10 @@ edit_uri: edit/main/docs/
 
 nav:
   - Home:
-    - Readme: index.md
+    - Readme: docs/index.md
     - API reference: reference/
-    - Changelog: changelog.md
-    - Contributing: contributing.md
+    - Changelog: docs/changelog.md
+    - Contributing: docs/contributing.md
     - Coverage report: coverage.md
 
 theme:
