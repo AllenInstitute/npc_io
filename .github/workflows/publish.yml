@@ -77,7 +77,7 @@ jobs:
           
     - name: Publish with bump & tag
       run: |
-        cd ${{ github.workspace }}
+        cd $GITHUB_WORKSPACE 
         git config --global user.email "ben.hardcastle@alleninstitue.org"
         git config --global user.name "Ben Hardcastle"
         pdm publish
