@@ -82,6 +82,7 @@ jobs:
     - name: Publish with bump & tag
       # actions/checkout 
       run: |
+        pdm install -G dev
         git config --global user.email "${{ github.actor }}@users.noreply.github.com"
         git config --global user.name "${{ github.actor }}"
         pdm publish
@@ -91,7 +92,12 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.PAT }}
         # use PAT, or push comes from `github-actions` bot, which can't trigger
         # other workflows   
-        
+
+    - name: Create release
+      uses: softprops/action-gh-release@v1
+      with:
+        body_path: CHANGELOG.md
+
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
       env:
