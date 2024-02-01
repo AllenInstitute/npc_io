@@ -20,15 +20,15 @@ python3 -m venv .venv
 ```
 
 3. Activate the environment:
-Windows
-```bash
-.venv\scripts\activate
-```
+- Windows
+  ```bash
+  .venv\scripts\activate
+  ```
 
-Unix
-```bash
-source .venv/bin/scripts/activate
-```
+- Unix
+  ```bash
+  source .venv/bin/scripts/activate
+  ```
 
 4. Add [PDM](https://pdm.fming.dev) to manage the project's dependencies and run pre-build jobs:
 ```bash
@@ -81,7 +81,7 @@ Always commit & push `pdm.lock` to share the up-to-date dev environment
 - pull changes with `git pull --rebase` to keep the commit history easy to read
 
 ## Updating from the original template
-With a clean working directory, run `pipx run copier update`.
+With a clean working directory, run `pipx run copier update --defaults`.
 
 See [here](https://github.com/AllenInstitute/copier-pdm-npc/blob/main/README.md)
 for more info.

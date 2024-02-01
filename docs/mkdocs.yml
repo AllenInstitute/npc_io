@@ -10,10 +10,11 @@ edit_uri: edit/main/docs/
 
 nav:
   - Home:
-    - Overview: index.md
+    - Readme: index.md
+    - API reference: reference/
     - Changelog: changelog.md
     - Contributing: contributing.md
-    - API reference: reference/
+    - Coverage report: coverage.md
 
 theme:
   name: material
@@ -46,6 +47,7 @@ theme:
   - content.code.annotate
   - content.code.copy
   - content.tooltips
+  - navigation.expand
   - navigation.footer
   - navigation.indexes
   - navigation.sections
@@ -83,8 +85,8 @@ markdown_extensions:
     emoji_generator: !!python/name:material.extensions.emoji.to_svg
 - pymdownx.magiclink
 - pymdownx.snippets:
-    base_path: [!relative $config_dir]
-    check_paths: false
+    url_download: true
+    check_paths: true
 - pymdownx.superfences
 - pymdownx.tabbed:
     alternate_style: true
@@ -104,7 +106,8 @@ plugins:
     - gen_ref_nav.py
 - literate-nav:
     nav_file: SUMMARY.md
-- coverage
+- coverage:
+    html_report_dir: ../htmlcov
 - mkdocstrings:
     handlers:
       python:
