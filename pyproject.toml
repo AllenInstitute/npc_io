@@ -234,7 +234,7 @@ composite = [
 
 [tool.pdm.scripts.post_build]
 composite = [
-    "git commit -am 'Bump [skip actions]'",
+    "git commit -am 'Bump'",
     "pdm run tag",
     "pdm run log",
 ]
