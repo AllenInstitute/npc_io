@@ -76,11 +76,13 @@ jobs:
         cache: true # speeds-up setup by caching downloaded packages 
           
     - name: Publish with bump & tag
+      # actions/checkout 
       run: |
-        git clone "https://github.com/${{ github.repository }}"
+        cd $GITHUB_WORKSPACE
         git config --global user.email "ben.hardcastle@alleninstitue.org"
         git config --global user.name "Ben Hardcastle"
         pdm publish
+        git push
         git push --tags
       env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
