@@ -2,11 +2,8 @@ name: Build docs
 
 on:
   push:
-    paths:
-      - "**.md"
-      - docs/**
     tags:
-      - '**'
+      - '*'
   release:
     types: [published]
   workflow_dispatch:
