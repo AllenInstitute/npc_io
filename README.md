@@ -1,6 +1,7 @@
 # npc_io
 
-File IO tools for MindScope Neuropixels projects, compatible with data in the cloud.
+Path, IO and caching tools for MindScope Neuropixels projects, compatible with data in the
+cloud.
 
 [![PyPI](https://img.shields.io/pypi/v/npc_io.svg?label=PyPI&color=blue)](https://pypi.org/project/npc_io/)
 [![Python version](https://img.shields.io/pypi/pyversions/npc_io)](https://pypi.org/project/npc_io/)

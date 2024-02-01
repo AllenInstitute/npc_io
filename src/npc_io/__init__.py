@@ -1,5 +1,6 @@
 """
-    File IO tools for MindScope Neuropixels projects, compatible with data in the cloud.
+Path, IO and caching tools for MindScope Neuropixels projects, compatible with
+data in the cloud.
 """
 
 import doctest
