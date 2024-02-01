@@ -1,16 +1,13 @@
 """
-    npc_io
-
-    File IO tools for MindScope Neuropixels projects in the cloud.
-    author: Ben Hardcastle <ben.hardcastle@alleninstitue.org>
-    license: MIT
+    File IO tools for MindScope Neuropixels projects, compatible with data in the cloud.
 """
-
 import doctest
 import importlib.metadata
 import logging
 
 import dotenv
+
+from npc_io.file_io import *
 
 logger = logging.getLogger(__name__)
 
