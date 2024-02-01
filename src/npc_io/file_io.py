@@ -12,6 +12,7 @@ import shutil
 import subprocess
 from typing import Any, Literal
 
+import boto3
 import crc32c
 import upath
 
@@ -56,6 +57,24 @@ def from_pathlike(pathlike: PathLike) -> upath.UPath:
                 return new
     return upath.UPath(path)
 
+
+def get_presigned_url(path: PathLike) -> str:
+    """Return a presigned URL for a file in S3 - used for streaming video data.
+    
+    - the URL expires after 24 hours
+    
+    >>> url = get_presigned_url('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
+    
+    """
+    path = from_pathlike(path)
+    bucket = tuple(path.parents)[-1].as_posix().split("://")[-1]
+    key = path.as_posix().split(bucket)[-1]
+    url = boto3.client("s3").generate_presigned_url(
+        ClientMethod="get_object",
+        Params={"Bucket": bucket.strip("/"), "Key": key},
+        ExpiresIn=24 * 3600,
+    )
+    return url
 
 def checksum(path: PathLike) -> str:
     """
@@ -165,29 +184,29 @@ def symlink(src: PathLike, dest: PathLike) -> None:
     logger.debug(f"Created symlink to {src} from {dest}")
 
 
-def size(path: PathLike) -> int:
+def get_size(path: PathLike) -> int:
     """Return the size of a file or directory in bytes.
 
-    >>> size('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
+    >>> get_size('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
     268
     """
     path = from_pathlike(path)
     return dir_size(path) if path.is_dir() else file_size(path)
 
 
-def size_gb(path: PathLike) -> float:
+def get_size_gb(path: PathLike) -> float:
     """Return the size of a file or directory in GB.
 
-    >>> size_gb('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1')
+    >>> get_size_gb('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1')
     1.7
     """
-    return round(size(path) / 1024**3, 1)
+    return round(get_size(path) / 1024**3, 1)
 
 
-def ctime(path: PathLike) -> float:
+def get_ctime(path: PathLike) -> float:
     """Return the creation time of a file in seconds since the epoch.
 
-    >>> ctime('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
+    >>> get_ctime('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
     1689287923.0
     >>> import datetime; datetime.datetime.fromtimestamp(_, datetime.timezone.utc)
     datetime.datetime(2023, 7, 13, 22, 38, 43, tzinfo=datetime.timezone.utc)
