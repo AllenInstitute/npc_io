@@ -1,6 +1,7 @@
 """
     File IO tools for MindScope Neuropixels projects, compatible with data in the cloud.
 """
+
 import doctest
 import importlib.metadata
 import logging
