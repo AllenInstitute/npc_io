@@ -1,6 +1,7 @@
 """
 Copy of stdlib functools.cached_property minus faulty thread lock.
 """
+
 from __future__ import annotations
 
 import functools
@@ -21,8 +22,8 @@ class cached_property(functools.cached_property, Generic[_T]):
     each instance's cached properties will no longer be thread-safe - ie. don't
     dispatch the same instance to multiple threads without implementing your own
     lock.
-    
-    
+
+
     Examples:
     .. code-block:: text
         >>> import random
@@ -33,7 +34,7 @@ class cached_property(functools.cached_property, Generic[_T]):
         >>> t = Test()
         >>> x = t.cached_prop
         >>> assert x == t.cached_prop
-        
+
         # note: like the built-in property, cached_properties can be overwritten:
         >>> t.cached_prop = 5
         >>> assert t.cached_prop == 5

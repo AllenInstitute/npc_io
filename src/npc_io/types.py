@@ -1,6 +1,7 @@
 """
 Type aliases and other typing-related definitions.
 """
+
 from __future__ import annotations
 
 import os

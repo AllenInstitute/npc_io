@@ -167,7 +167,7 @@ def symlink(src: PathLike, dest: PathLike) -> None:
 
 def size(path: PathLike) -> int:
     """Return the size of a file or directory in bytes.
-    
+
     >>> size('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
     268
     """
@@ -177,7 +177,7 @@ def size(path: PathLike) -> int:
 
 def size_gb(path: PathLike) -> float:
     """Return the size of a file or directory in GB.
-    
+
     >>> size_gb('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1')
     1.7
     """
@@ -186,7 +186,7 @@ def size_gb(path: PathLike) -> float:
 
 def ctime(path: PathLike) -> float:
     """Return the creation time of a file in seconds since the epoch.
-    
+
     >>> ctime('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
     1689287923.0
     >>> import datetime; datetime.datetime.fromtimestamp(_, datetime.timezone.utc)
@@ -228,6 +228,7 @@ def free_gb(path: PathLike) -> float:
     "Return free space at `path`, to .1 GB. Raises FileNotFoundError if `path` not accessible."
     path = from_pathlike(path)
     return round(shutil.disk_usage(path).free / 1024**3, 1)
+
 
 def run_and_save_notebook(
     notebook_path: PathLike,
