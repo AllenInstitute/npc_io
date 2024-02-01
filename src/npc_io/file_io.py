@@ -60,11 +60,11 @@ def from_pathlike(pathlike: PathLike) -> upath.UPath:
 
 def get_presigned_url(path: PathLike) -> str:
     """Return a presigned URL for a file in S3 - used for streaming video data.
-    
+
     - the URL expires after 24 hours
-    
+
     >>> url = get_presigned_url('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
-    
+
     """
     path = from_pathlike(path)
     bucket = tuple(path.parents)[-1].as_posix().split("://")[-1]
@@ -75,6 +75,7 @@ def get_presigned_url(path: PathLike) -> str:
         ExpiresIn=24 * 3600,
     )
     return url
+
 
 def checksum(path: PathLike) -> str:
     """
