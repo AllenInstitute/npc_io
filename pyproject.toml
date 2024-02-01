@@ -145,8 +145,7 @@ show_error_codes = true
 ignore_missing_imports = true
 implicit_reexport = false
 exclude = [
-    "src/npc_sessions/plots",
-    "src/npc_sessions/scripts",
+    "src/npc_io/scripts",
 ]
 
 [tool.isort]
