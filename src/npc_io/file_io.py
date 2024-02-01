@@ -58,6 +58,10 @@ def from_pathlike(pathlike: PathLike) -> upath.UPath:
 
 
 def checksum(path: PathLike) -> str:
+    """
+    >>> checksum('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
+    '1C86AD2C'
+    """
     path = from_pathlike(path)
     hasher = crc32c.crc32c
 
@@ -79,6 +83,10 @@ def checksum(path: PathLike) -> str:
 
 
 def checksums_match(*paths: PathLike) -> bool:
+    """
+    >>> checksums_match(*['s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json'] * 2)
+    True
+    """
     checksums = tuple(checksum(p) for p in paths)
     return all(c == checksums[0] for c in checksums)
 
@@ -158,17 +166,32 @@ def symlink(src: PathLike, dest: PathLike) -> None:
 
 
 def size(path: PathLike) -> int:
-    """Return the size of a file or directory in bytes"""
+    """Return the size of a file or directory in bytes.
+    
+    >>> size('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
+    268
+    """
     path = from_pathlike(path)
     return dir_size(path) if path.is_dir() else file_size(path)
 
 
 def size_gb(path: PathLike) -> float:
-    """Return the size of a file or directory in GB"""
+    """Return the size of a file or directory in GB.
+    
+    >>> size_gb('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1')
+    1.7
+    """
     return round(size(path) / 1024**3, 1)
 
 
 def ctime(path: PathLike) -> float:
+    """Return the creation time of a file in seconds since the epoch.
+    
+    >>> ctime('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
+    1689287923.0
+    >>> import datetime; datetime.datetime.fromtimestamp(_)
+    datetime.datetime(2023, 7, 13, 15, 38, 43)
+    """
     path = from_pathlike(path)
     with contextlib.suppress(AttributeError):
         return path.stat().st_ctime
