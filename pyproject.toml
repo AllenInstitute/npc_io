@@ -203,6 +203,16 @@ log = "git-changelog -o CHANGELOG.md"
 dryrun = "pdm publish --repository testpypi --dry-run"
 post_init = "pdm install --plugins"
 
+[tool.pdm.scripts.test]
+composite = [
+    "pdm run mypy",
+    "pdm run pytest",
+]
+
+[tool.pdm.scripts.docs]
+shell = "cd docs && mkdocs serve"
+help = "Start the dev server for doc preview"
+
 [tool.pdm.scripts.bumpver]
 composite = [
     "pdm self add pdm-bump",
@@ -215,21 +225,10 @@ composite = [
     "pdm bump tag",
 ]
 
-[tool.pdm.scripts.docs]
-shell = "cd docs && mkdocs serve"
-help = "Start the dev server for doc preview"
-
-[tool.pdm.scripts.test]
-composite = [
-    "pdm run mypy",
-    "pdm run pytest",
-]
-
 [tool.pdm.scripts.pre_build]
 composite = [
     "pdm run black",
     "pdm run ruff",
-    "pdm run log",
     "pdm run bumpver",
 ]
 
@@ -237,4 +236,5 @@ composite = [
 composite = [
     "git commit -am 'Bump [skip actions]'",
     "pdm run tag",
+    "pdm run log",
 ]
