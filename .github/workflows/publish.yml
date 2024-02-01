@@ -79,15 +79,18 @@ jobs:
       # actions/checkout 
       run: |
         cd $GITHUB_WORKSPACE
-        git config --global user.email "ben.hardcastle@alleninstitue.org"
-        git config --global user.name "Ben Hardcastle"
         pdm publish
-        git push
-        git push --tags
+          
+    - name: Push changes
+      uses: EndBug/add-and-commit@v9
+      with:
+        message: "Bump [skip actions]"
+        default_author: github_actor
+        push: true
       env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
-          # use PAT, or push comes from `github-actions` bot, which can't trigger
-          # other workflows   
+        GITHUB_TOKEN: ${{ secrets.PAT }}
+        # use PAT, or push comes from `github-actions` bot, which can't trigger
+        # other workflows   
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
