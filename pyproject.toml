@@ -196,7 +196,7 @@ docs = [
 [tool.pdm.scripts]
 ruff = "ruff check src --fix-only"
 black = "black src"
-pytest = "pytest --cov --cov-report=html"
+pytest = "pytest --cov-report term-missing:skip-covered --cov-report=html"
 mypy = "mypy src --install-types --non-interactive"
 log = "git-changelog -o CHANGELOG.md"
 dryrun = "pdm publish --repository testpypi --dry-run"
