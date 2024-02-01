@@ -90,7 +90,7 @@ def checksum(path: PathLike) -> str:
 
     blocks_per_chunk = 4096
     multi_part_threshold_gb = 0.2
-    if file_size(path) < multi_part_threshold_gb * 1024**3:
+    if _file_size(path) < multi_part_threshold_gb * 1024**3:
         return formatted(hasher(path.read_bytes()))
     hash = 0
 
@@ -192,7 +192,7 @@ def get_size(path: PathLike) -> int:
     268
     """
     path = from_pathlike(path)
-    return dir_size(path) if path.is_dir() else file_size(path)
+    return _dir_size(path) if path.is_dir() else _file_size(path)
 
 
 def get_size_gb(path: PathLike) -> float:
@@ -220,7 +220,13 @@ def get_ctime(path: PathLike) -> float:
     raise RuntimeError(f"Could not get size of {path}")
 
 
-def file_size(path: PathLike) -> int:
+def get_free_gb(path: PathLike) -> float:
+    "Return free space at `path`, to .1 GB. Raises FileNotFoundError if `path` not accessible."
+    path = from_pathlike(path)
+    return round(shutil.disk_usage(path).free / 1024**3, 1)
+
+
+def _file_size(path: PathLike) -> int:
     path = from_pathlike(path)
     with contextlib.suppress(AttributeError):
         return path.stat().st_size
@@ -229,25 +235,14 @@ def file_size(path: PathLike) -> int:
     raise RuntimeError(f"Could not get size of {path}")
 
 
-def dir_size(path: PathLike) -> int:
+def _dir_size(path: PathLike) -> int:
     """Return the size of a directory in bytes"""
     path = from_pathlike(path)
     if not path.is_dir():
         raise ValueError(f"{path} is not a directory")
     dir_size = 0
-    dir_size += sum(file_size(f) for f in path.rglob("*") if f.is_file())
+    dir_size += sum(_file_size(f) for f in path.rglob("*") if f.is_file())
     return dir_size
-
-
-def dir_size_gb(path: PathLike) -> float:
-    """Return the size of a directory in GB"""
-    return round(dir_size(path) / 1024**3, 1)
-
-
-def free_gb(path: PathLike) -> float:
-    "Return free space at `path`, to .1 GB. Raises FileNotFoundError if `path` not accessible."
-    path = from_pathlike(path)
-    return round(shutil.disk_usage(path).free / 1024**3, 1)
 
 
 def run_and_save_notebook(
