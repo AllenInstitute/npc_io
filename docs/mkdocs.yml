@@ -3,17 +3,17 @@ site_description: "File IO tools for MindScope Neuropixels projects in the cloud
 site_url: "https://AllenInstitute.github.io/npc_io"
 repo_url: "https://github.com/AllenInstitute/npc_io"
 repo_name: "AllenInstitute/npc_io"
-site_dir: "site"
+site_dir: "site/docs"
 watch: [mkdocs.yml, ../src/npc_io]
 copyright: Copyright &copy; 2024 Allen Institute for Neural Dynamics
-edit_uri: edit/main/docs/
+edit_uri: blob/main/docs/
 
 nav:
   - Home:
-    - Readme: docs/index.md
+    - Readme: index.md
     - API reference: reference/
-    - Changelog: docs/changelog.md
-    - Contributing: docs/contributing.md
+    - Changelog: changelog.md
+    - Contributing: contributing.md
     - Coverage report: coverage.md
 
 theme:
@@ -85,7 +85,6 @@ markdown_extensions:
     emoji_generator: !!python/name:material.extensions.emoji.to_svg
 - pymdownx.magiclink
 - pymdownx.snippets:
-    base_path: docs
     url_download: true
     check_paths: true
 - pymdownx.superfences
