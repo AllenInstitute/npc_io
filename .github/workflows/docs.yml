@@ -26,8 +26,7 @@ jobs:
           cache: true
       - name: Build pages
         run: |
-          pdm install -G docs -d
-          pdm run pytest
+          pdm install -G docs
           cd docs && pdm run mkdocs build
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
