@@ -9,6 +9,8 @@ import logging
 import dotenv
 
 from npc_io.file_io import *
+from npc_io.lazy_dict import *
+from npc_io.cached_property import *
 
 logger = logging.getLogger(__name__)
 
