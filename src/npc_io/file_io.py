@@ -15,11 +15,11 @@ from typing import Any, Callable, Generic, Literal, TypeVar, Union, overload
 
 import crc32c
 import upath
-from typing_extensions import Self
+from typing_extensions import Self, TypeAlias
 
 logger = logging.getLogger(__name__)
 
-PathLike = Union[str, bytes, os.PathLike, pathlib.Path, upath.UPath]
+PathLike: TypeAlias = Union[str, bytes, os.PathLike, pathlib.Path, upath.UPath]
 
 
 def from_pathlike(pathlike: PathLike) -> upath.UPath:
