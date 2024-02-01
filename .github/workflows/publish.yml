@@ -82,8 +82,6 @@ jobs:
     - name: Publish with bump & tag
       # actions/checkout 
       run: |
-        git clone https://github.com/AllenInstitute/npc_io.git
-        cd npc_io
         pdm install -G dev
         git config --global user.email "${{ github.actor }}@users.noreply.github.com"
         git config --global user.name "${{ github.actor }}"
