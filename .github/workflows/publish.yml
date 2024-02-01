@@ -77,7 +77,7 @@ jobs:
           
     - name: Publish with bump & tag
       run: |
-        cd $GITHUB_WORKSPACE 
+        git clone "https://github.com/${{ github.workspace }}"
         git config --global user.email "ben.hardcastle@alleninstitue.org"
         git config --global user.name "Ben Hardcastle"
         pdm publish
