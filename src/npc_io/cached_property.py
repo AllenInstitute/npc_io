@@ -33,6 +33,10 @@ class cached_property(functools.cached_property, Generic[_T]):
         >>> t = Test()
         >>> x = t.cached_prop
         >>> assert x == t.cached_prop
+        
+        # note: like the built-in property, cached_properties can be overwritten:
+        >>> t.cached_prop = 5
+        >>> assert t.cached_prop == 5
     """
 
     func: Callable[[Any], _T]
