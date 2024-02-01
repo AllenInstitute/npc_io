@@ -189,8 +189,8 @@ def ctime(path: PathLike) -> float:
     
     >>> ctime('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
     1689287923.0
-    >>> import datetime; datetime.datetime.fromtimestamp(_)
-    datetime.datetime(2023, 7, 13, 15, 38, 43)
+    >>> import datetime; datetime.datetime.fromtimestamp(_, datetime.timezone.utc)
+    datetime.datetime(2023, 7, 13, 22, 38, 43, tzinfo=datetime.timezone.utc)
     """
     path = from_pathlike(path)
     with contextlib.suppress(AttributeError):
