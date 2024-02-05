@@ -10,8 +10,9 @@ import os
 import pathlib
 import shutil
 import subprocess
-from typing import Any, Iterable, Literal
 import typing
+from collections.abc import Iterable
+from typing import Any, Literal
 
 import boto3
 import crc32c
@@ -59,18 +60,21 @@ def from_pathlike(pathlike: PathLike) -> upath.UPath:
     return upath.UPath(path)
 
 
-def iterable_from_pathlikes(pathlikes: PathLike | Iterable[PathLike]) -> tuple[upath.UPath, ...]:
+def iterable_from_pathlikes(
+    pathlikes: PathLike | Iterable[PathLike],
+) -> tuple[upath.UPath, ...]:
     """Deal with single or multiple pathlikes, mainly to deal with the problem of strings being iterable, but also being
       pathlike.
-    
+
     >>> a = iterable_from_pathlikes('test.txt')
     >>> b = iterable_from_pathlikes(['test.txt'])
     >>> assert a == b
     """
     if not isinstance(pathlikes, Iterable) or isinstance(pathlikes, str):
-        pathlikes = (pathlikes, )
+        pathlikes = (pathlikes,)
     iter_pathlikes = typing.cast(Iterable[PathLike], pathlikes)
     return tuple(from_pathlike(p) for p in iter_pathlikes)
+
 
 def get_presigned_url(path: PathLike) -> str:
     """Return a presigned URL for a file in S3 - used for streaming video data.
