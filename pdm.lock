@@ -5,7 +5,7 @@
 groups = ["default", "dev", "docs"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:568a983b9473758481ba75cbc9276b3169da1bfc51ed3b7c749640137bcbed00"
+content_hash = "sha256:7d195b14545cbec15cca14fe27d66f28731105c22aa92d2a02a8a17f88fecda8"
 
 [[package]]
 name = "aiobotocore"
@@ -1640,7 +1640,7 @@ files = [
 
 [[package]]
 name = "universal-pathlib"
-version = "0.1.4"
+version = "0.2.1"
 requires_python = ">=3.8"
 summary = "pathlib api extended to use fsspec backends"
 groups = ["default"]
@@ -1648,8 +1648,8 @@ dependencies = [
     "fsspec>=2022.1.0",
 ]
 files = [
-    {file = "universal_pathlib-0.1.4-py3-none-any.whl", hash = "sha256:f99186cf950bde1262de9a590bb019613ef84f9fabd9f276e8b019722201943a"},
-    {file = "universal_pathlib-0.1.4.tar.gz", hash = "sha256:82e5d86d16a27e0ea1adc7d88acbcba9d02d5a45488163174f96d9ac289db2e4"},
+    {file = "universal_pathlib-0.2.1-py3-none-any.whl", hash = "sha256:bb14881f1c6c025c654a658c253b4cf89e8238dff6d3c847aa5723899227f85e"},
+    {file = "universal_pathlib-0.2.1.tar.gz", hash = "sha256:fda2f484d875c26079771f94acfef58647eed80efce75f0bf8824373b432e802"},
 ]
 
 [[package]]
