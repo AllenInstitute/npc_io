@@ -23,8 +23,8 @@ from npc_io.types import PathLike
 logger = logging.getLogger(__name__)
 
 
-def from_pathlike(pathlike: PathLike, fsspec_storage_options: dict[str, Any]) -> upath.UPath:
-    """
+def from_pathlike(pathlike: PathLike, **fsspec_storage_options: Any) -> upath.UPath:
+    """Return a UPath object from a pathlike object, with optional fsspec storage
     >>> from_pathlike('s3://aind-data-bucket/experiment2_Record Node 102#probeA.png')
     S3Path('s3://aind-data-bucket/experiment2_Record Node 102#probeA.png')
 
