@@ -23,7 +23,7 @@ from npc_io.types import PathLike
 logger = logging.getLogger(__name__)
 
 
-def from_pathlike(pathlike: PathLike) -> upath.UPath:
+def from_pathlike(pathlike: PathLike, fsspec_storage_options: dict[str, Any]) -> upath.UPath:
     """
     >>> from_pathlike('s3://aind-data-bucket/experiment2_Record Node 102#probeA.png')
     S3Path('s3://aind-data-bucket/experiment2_Record Node 102#probeA.png')
@@ -36,7 +36,7 @@ def from_pathlike(pathlike: PathLike) -> upath.UPath:
     path: str = os.fsdecode(pathlike)
     # UPath will do rsplit('#')[0] on path
     if "#" in (p := pathlib.Path(path)).name:
-        return upath.UPath(path).with_name(p.name)
+        return upath.UPath(path, **fsspec_storage_options).with_name(p.name)
     if "#" in p.parent.as_posix():
         if p.parent.as_posix().count("#") > 1:
             raise ValueError(
@@ -45,7 +45,7 @@ def from_pathlike(pathlike: PathLike) -> upath.UPath:
         for parent in p.parents:
             if "#" in parent.name:
                 # we can't create or join the problematic `#`, so we have to 'discover' it
-                new = upath.UPath(path).with_name(parent.name)
+                new = upath.UPath(path, **fsspec_storage_options).with_name(parent.name)
                 for part in p.relative_to(parent).parts:
                     result = next(
                         new.glob(part),
@@ -57,7 +57,9 @@ def from_pathlike(pathlike: PathLike) -> upath.UPath:
                         )
                     new = result
                 return new
-    return upath.UPath(path)
+    if any(path.endswith(hdf5) for hdf5 in [".h5", ".hdf5", ".sync"]):
+        fsspec_storage_options.setdefault("cache_type", "first")
+    return upath.UPath(path, **fsspec_storage_options)
 
 
 def iterable_from_pathlikes(
