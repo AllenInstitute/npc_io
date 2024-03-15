@@ -25,6 +25,14 @@ logger = logging.getLogger(__name__)
 
 def from_pathlike(pathlike: PathLike, **fsspec_storage_options: Any) -> upath.UPath:
     """Return a UPath object from a pathlike object, with optional fsspec storage
+    options.
+    
+    - if pathlike is already a UPath, it is returned as-is
+    - if the environment variable `NPC_IO_ANON` is set, anon=True is added to
+      fsspsec_storage_options
+    - if pathlike is an S3 path, the `cache_type` is set to 'first' for HDF5 files
+      for faster opening
+    
     >>> from_pathlike('s3://aind-data-bucket/experiment2_Record Node 102#probeA.png')
     S3Path('s3://aind-data-bucket/experiment2_Record Node 102#probeA.png')
 
@@ -34,6 +42,8 @@ def from_pathlike(pathlike: PathLike, **fsspec_storage_options: Any) -> upath.UP
     if isinstance(pathlike, upath.UPath):
         return pathlike
     path: str = os.fsdecode(pathlike)
+    if os.getenv("NPC_IO_ANON"):
+        fsspec_storage_options.setdefault("anon", True)
     # UPath will do rsplit('#')[0] on path
     if "#" in (p := pathlib.Path(path)).name:
         return upath.UPath(path, **fsspec_storage_options).with_name(p.name)
