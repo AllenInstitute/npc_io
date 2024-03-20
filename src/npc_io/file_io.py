@@ -67,8 +67,6 @@ def from_pathlike(pathlike: PathLike, **fsspec_storage_options: Any) -> upath.UP
                         )
                     new = result
                 return new
-    if any(path.endswith(hdf5) for hdf5 in [".h5", ".hdf5", ".sync"]):
-        fsspec_storage_options.setdefault("cache_type", "first")
     return upath.UPath(path, **fsspec_storage_options)
 
 
