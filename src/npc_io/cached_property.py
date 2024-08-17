@@ -43,6 +43,7 @@ class cached_property(functools.cached_property, Generic[_T]):
     func: Callable[[Any], _T]
 
     def __init__(self, func: Callable[[Any], _T]) -> None:
+        self.__module__ = func.__module__ # allows doctests to run
         super().__init__(func)
 
     @overload
