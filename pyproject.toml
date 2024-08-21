@@ -14,7 +14,7 @@ dependencies = [
     "s3fs>=2023.12.2",
     "boto3>=1.28.17",
 ]
-version = "0.1.27"
+version = "0.1.28"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Programming Language :: Python :: 3",
