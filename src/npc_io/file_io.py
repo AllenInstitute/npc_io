@@ -5,11 +5,13 @@ Tools for working with files on local machine, network or cloud.
 from __future__ import annotations
 
 import contextlib
+import functools
 import logging
 import os
 import pathlib
 import shutil
 import subprocess
+import time
 import typing
 from collections.abc import Iterable
 from typing import Any, Literal
@@ -86,14 +88,20 @@ def iterable_from_pathlikes(
     return tuple(from_pathlike(p) for p in iter_pathlikes)
 
 
-def get_presigned_url(path: PathLike) -> str:
-    """Return a presigned URL for a file in S3 - used for streaming video data.
+def get_presigned_url(path: PathLike, expiration_sec: int = 24 * 3600) -> str:
+    """Return a presigned URL for a file in S3 - useful for streaming video data.
 
-    - the URL expires after 24 hours
+    - the URL expires after 24 hours by default, and the url returned by this
+      function will be cached for the same duration
 
     >>> url = get_presigned_url('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
 
     """
+    return _get_presigned_url_with_ttl(path, ttl_hash=round(time.time() /expiration_sec))
+    
+@functools.cache
+def _get_presigned_url_with_ttl(path: PathLike, ttl_hash: int) -> str:
+    del ttl_hash  # unused, just needed for caching
     path = from_pathlike(path)
     bucket = tuple(path.parents)[-1].as_posix().split("://")[-1]
     key = path.as_posix().split(bucket)[-1]
