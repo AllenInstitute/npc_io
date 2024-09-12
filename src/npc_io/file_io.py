@@ -98,12 +98,19 @@ def get_presigned_url(path: PathLike, expires_in: float = 24 * 3600) -> str:
     >>> url = get_presigned_url('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
 
     """
-    
-    return _get_presigned_url_with_ttl(from_pathlike(path), expires_in=expires_in, ttl_hash=round(time.time() / expires_in))
-    
+
+    return _get_presigned_url_with_ttl(
+        from_pathlike(path),
+        expires_in=expires_in,
+        ttl_hash=round(time.time() / expires_in),
+    )
+
+
 @functools.cache
-def _get_presigned_url_with_ttl(path: upath.UPath, expires_in: float, ttl_hash: int) -> str:
-    del ttl_hash # unused, just needed for caching
+def _get_presigned_url_with_ttl(
+    path: upath.UPath, expires_in: float, ttl_hash: int
+) -> str:
+    del ttl_hash  # unused, just needed for caching
     bucket = tuple(path.parents)[-1].as_posix().split("://")[-1]
     key = path.as_posix().split(bucket)[-1]
     url = boto3.client("s3").generate_presigned_url(
