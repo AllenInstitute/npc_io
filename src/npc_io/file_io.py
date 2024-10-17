@@ -88,14 +88,16 @@ def iterable_from_pathlikes(
     return tuple(from_pathlike(p) for p in iter_pathlikes)
 
 
-def get_presigned_url(path: PathLike, expires_in: float = 24 * 3600, **extra_params: str) -> str:
+def get_presigned_url(
+    path: PathLike, expires_in: float = 24 * 3600, **extra_params: str
+) -> str:
     """Return a presigned URL for a file in S3 - useful for streaming video data.
 
     - the URL expires after 24 hours by default, and the url returned by this
       function will be cached for the same duration: provide a numer of seconds to
       override this duration
     - extra_params are passed to boto3.client.generate_presigned_url(..., Params=default_params | extra_params)
-    
+
     >>> url = get_presigned_url('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
 
     """
@@ -110,7 +112,10 @@ def get_presigned_url(path: PathLike, expires_in: float = 24 * 3600, **extra_par
 
 @functools.cache
 def _get_presigned_url_with_ttl(
-    path: upath.UPath, expires_in: float, ttl_hash: int, **extra_params: str,
+    path: upath.UPath,
+    expires_in: float,
+    ttl_hash: int,
+    **extra_params: str,
 ) -> str:
     del ttl_hash  # unused, just needed for caching
     bucket = tuple(path.parents)[-1].as_posix().split("://")[-1]
@@ -118,9 +123,11 @@ def _get_presigned_url_with_ttl(
     params = {
         "Bucket": bucket.strip("/"),
         "Key": key,
-    }  
+    }
     if any(k in extra_params for k in ("Bucket", "Key")):
-        logger.warning("Bucket and Key are determined automatically and don't need to be passed in as extra_params kwargs")
+        logger.warning(
+            "Bucket and Key are determined automatically and don't need to be passed in as extra_params kwargs"
+        )
     url = boto3.client("s3").generate_presigned_url(
         ClientMethod="get_object",
         Params=params | extra_params,
