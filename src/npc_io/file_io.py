@@ -153,7 +153,7 @@ def checksum(path: PathLike) -> str:
         return formatted(hasher(path.read_bytes()))
     hash = 0
 
-    with open(path, "rb") as f:
+    with path.open("rb") as f:
         for chunk in iter(lambda: f.read(blocks_per_chunk), b""):
             hash = hasher(chunk, hash)
     checksum = formatted(hash)
