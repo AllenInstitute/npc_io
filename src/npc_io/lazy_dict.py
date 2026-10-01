@@ -56,11 +56,14 @@ class LazyDict(collections.abc.Mapping[K, V]):
 
     def __init__(self, *args, **kwargs) -> None:
         self._raw_dict = dict(*args, **kwargs)
+        self._evaluated_keys: set[K] = set()
 
     def __getitem__(self, key) -> V:
-        with contextlib.suppress(TypeError):
-            func, args, *kwargs = self._raw_dict.__getitem__(key)
-            self._raw_dict.__setitem__(key, func(*args, **kwargs[0]))
+        if key not in self._evaluated_keys:
+            with contextlib.suppress(TypeError):
+                func, args, *kwargs = self._raw_dict.__getitem__(key)
+                self._raw_dict.__setitem__(key, func(*args, **kwargs[0]))
+                self._evaluated_keys.add(key)
         return self._raw_dict.__getitem__(key)
 
     def __iter__(self) -> Iterator[K]:
