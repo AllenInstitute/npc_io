@@ -22,4 +22,4 @@ import npc_io
 ```
 
 # Development
-See instructions in https://github.com/AllenInstitute/npc_io/CONTRIBUTING.md and the original template: https://github.com/AllenInstitute/copier-pdm-npc/blob/main/README.md
+See instructions in https://github.com/AllenInstitute/npc_io/CONTRIBUTING.md and the [uv documentation](https://docs.astral.sh/uv/).

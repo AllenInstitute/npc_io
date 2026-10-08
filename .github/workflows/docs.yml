@@ -20,10 +20,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: pdm-project/setup-pdm@main
+      - uses: astral-sh/setup-uv@v6
         with:
           python-version: '3.11'
-          cache: true
       - name: Configure aws credentials
         env:
           AWS_IAM_ROLE: ${{ vars.AWS_IAM_ROLE }}
@@ -34,8 +33,8 @@ jobs:
           aws-region: ${{ vars.AWS_DEFAULT_REGION }}
       - name: Build pages
         run: |
-          pdm install -G docs
-          cd docs && pdm run mkdocs build
+          uv sync --group docs
+          uv run --directory docs mkdocs build
         env:
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
           
