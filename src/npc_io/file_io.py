@@ -196,13 +196,13 @@ def copy(src: PathLike, dest: PathLike, max_attempts: int = 2) -> None:
     dest.parent.mkdir(parents=True, exist_ok=True)
 
     if not dest.exists():
-        shutil.copy2(src, dest)
+        shutil.copy2(str(src), str(dest))
         logger.debug(f"Copied {src} to {dest}")
 
     for _ in range(max_attempts):
         if checksums_match(src, dest):
             break
-        shutil.copy2(src, dest)
+        shutil.copy2(str(src), str(dest))
     else:
         raise OSError(
             f"Failed to copy {src} to {dest} with checksum-validation after {max_attempts} attempts"
@@ -215,7 +215,7 @@ def move(src: PathLike, dest: PathLike, **rmtree_kwargs) -> None:
     src, dest = from_pathlike(src), from_pathlike(dest)
     copy(src, dest)
     if src.is_dir():
-        shutil.rmtree(src, **rmtree_kwargs)
+        shutil.rmtree(str(src), **rmtree_kwargs)
     else:
         src.unlink()
     logger.debug(f"Deleted {src}")
@@ -275,14 +275,14 @@ def get_ctime(path: PathLike) -> float:
     with contextlib.suppress(AttributeError):
         return path.stat().st_ctime
     with contextlib.suppress(AttributeError):
-        return path.stat()["LastModified"].timestamp()
+        return typing.cast(Any, path.stat())["LastModified"].timestamp()
     raise RuntimeError(f"Could not get size of {path}")
 
 
 def get_free_gb(path: PathLike) -> float:
     "Return free space at `path`, to .1 GB. Raises FileNotFoundError if `path` not accessible."
     path = from_pathlike(path)
-    return round(shutil.disk_usage(path).free / 1024**3, 1)
+    return round(shutil.disk_usage(str(path)).free / 1024**3, 1)
 
 
 def _file_size(path: PathLike) -> int:
@@ -290,7 +290,7 @@ def _file_size(path: PathLike) -> int:
     with contextlib.suppress(AttributeError):
         return path.stat().st_size
     with contextlib.suppress(AttributeError):
-        return path.stat()["size"]
+        return typing.cast(Any, path.stat())["size"]
     raise RuntimeError(f"Could not get size of {path}")
 
 

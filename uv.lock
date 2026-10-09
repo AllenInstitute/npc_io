@@ -3244,7 +3244,7 @@ requires-dist = [
     { name = "python-dotenv", specifier = ">=1.0.1" },
     { name = "s3fs", specifier = ">=2023.12.2" },
     { name = "typing-extensions", specifier = ">=4.9.0" },
-    { name = "universal-pathlib", specifier = ">0.1.0" },
+    { name = "universal-pathlib", specifier = ">=0.3.10" },
 ]
 
 [package.metadata.requires-dev]
