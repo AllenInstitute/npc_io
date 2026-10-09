@@ -36,10 +36,10 @@ def from_pathlike(pathlike: PathLike, **fsspec_storage_options: Any) -> upath.UP
       for faster opening
 
     >>> from_pathlike('s3://aind-data-bucket/experiment2_Record Node 102#probeA.png')
-    S3Path('s3://aind-data-bucket/experiment2_Record Node 102#probeA.png')
+    S3Path('aind-data-bucket/experiment2_Record Node 102#probeA.png', protocol='s3')
 
-    >>> from_pathlike('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
-    S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
+    >>> from_pathlike('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')  # doctest: +SKIP
+    S3Path('codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json', protocol='s3')
     """
     if isinstance(pathlike, upath.UPath):
         return pathlike
@@ -98,7 +98,7 @@ def get_presigned_url(
       override this duration
     - extra_params are passed to boto3.client.generate_presigned_url(..., Params=default_params | extra_params)
 
-    >>> url = get_presigned_url('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
+    >>> url = get_presigned_url('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')  # doctest: +SKIP
 
     """
 
@@ -138,7 +138,7 @@ def _get_presigned_url_with_ttl(
 
 def checksum(path: PathLike) -> str:
     """
-    >>> checksum('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
+    >>> checksum('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')  # doctest: +SKIP
     '1C86AD2C'
     """
     path = from_pathlike(path)
@@ -163,7 +163,7 @@ def checksum(path: PathLike) -> str:
 
 def checksums_match(*paths: PathLike) -> bool:
     """
-    >>> checksums_match(*['s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json'] * 2)
+    >>> checksums_match(*['s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json'] * 2)  # doctest: +SKIP
     True
     """
     checksums = tuple(checksum(p) for p in paths)
@@ -247,7 +247,7 @@ def symlink(src: PathLike, dest: PathLike) -> None:
 def get_size(path: PathLike) -> int:
     """Return the size of a file or directory in bytes.
 
-    >>> get_size('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
+    >>> get_size('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')  # doctest: +SKIP
     268
     """
     path = from_pathlike(path)
@@ -257,7 +257,7 @@ def get_size(path: PathLike) -> int:
 def get_size_gb(path: PathLike) -> float:
     """Return the size of a file or directory in GB.
 
-    >>> get_size_gb('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1')
+    >>> get_size_gb('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1')  # doctest: +SKIP
     1.7
     """
     return round(get_size(path) / 1024**3, 1)
@@ -266,9 +266,9 @@ def get_size_gb(path: PathLike) -> float:
 def get_ctime(path: PathLike) -> float:
     """Return the creation time of a file in seconds since the epoch.
 
-    >>> get_ctime('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')
+    >>> get_ctime('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')  # doctest: +SKIP
     1689287923.0
-    >>> import datetime; datetime.datetime.fromtimestamp(_, datetime.timezone.utc)
+    >>> import datetime; datetime.datetime.fromtimestamp(_, datetime.timezone.utc)  # doctest: +SKIP
     datetime.datetime(2023, 7, 13, 22, 38, 43, tzinfo=datetime.timezone.utc)
     """
     path = from_pathlike(path)
