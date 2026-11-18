@@ -40,35 +40,21 @@ def from_pathlike(pathlike: PathLike, **fsspec_storage_options: Any) -> upath.UP
 
     >>> from_pathlike('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json')  # doctest: +SKIP
     S3Path('codeocean-s3datasetsbucket-1u41qdg42ur9/4797cab2-9ea2-4747-8d15-5ba064837c1c/postprocessed/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/template_metrics/params.json', protocol='s3')
+
+    >>> import tempfile
+    >>> d = pathlib.Path(tempfile.mkdtemp()) / 'a#b'
+    >>> d.mkdir()
+    >>> _ = (d / 'c.txt').write_text('x')
+    >>> from_pathlike(d / 'c.txt').read_text()
+    'x'
     """
     if isinstance(pathlike, upath.UPath):
         return pathlike
     path: str = os.fsdecode(pathlike)
     if os.getenv("NPC_IO_ANON"):
         fsspec_storage_options.setdefault("anon", True)
-    # UPath will do rsplit('#')[0] on path
-    if "#" in (p := pathlib.Path(path)).name:
-        return upath.UPath(path, **fsspec_storage_options).with_name(p.name)
-    if "#" in p.parent.as_posix():
-        if p.parent.as_posix().count("#") > 1:
-            raise ValueError(
-                f"Path {p} contains multiple '#' in a parent dirs, which we don't have a fix for yet"
-            )
-        for parent in p.parents:
-            if "#" in parent.name:
-                # we can't create or join the problematic `#`, so we have to 'discover' it
-                new = upath.UPath(path, **fsspec_storage_options).with_name(parent.name)
-                for part in p.relative_to(parent).parts:
-                    result = next(
-                        new.glob(part),
-                        None,
-                    )  # we can't create or join the problem-#, so we have to 'discover' it
-                    if result is None:
-                        raise FileNotFoundError(
-                            f"In attempting to handle a path containing '#', we couldn't find {path}"
-                        )
-                    new = result
-                return new
+    # universal-pathlib>=0.3 handles '#' in paths natively (it previously did
+    # rsplit('#')[0], which needed a workaround here)
     return upath.UPath(path, **fsspec_storage_options)
 
 
