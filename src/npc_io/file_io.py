@@ -8,7 +8,6 @@ import contextlib
 import functools
 import logging
 import os
-import pathlib
 import shutil
 import subprocess
 import time
